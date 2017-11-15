@@ -39,11 +39,12 @@ function minifyPromise (svgo, decl, opts) {
         }
 
         promises.push(new Promise((resolve, reject) => {
-            return svgo.optimize(svg, result => {
+            return svgo.optimize(svg).then(result => {
                 if (result.error) {
                     return reject(`${PLUGIN}: ${result.error}`);
                 }
                 let data = isUriEncoded ? encode(result.data) : result.data;
+
                 // Should always encode # otherwise we yield a broken SVG
                 // in Firefox (works in Chrome however). See this issue:
                 // https://github.com/ben-eb/cssnano/issues/245
@@ -57,6 +58,8 @@ function minifyPromise (svgo, decl, opts) {
                     after: '',
                 };
                 return resolve();
+            }).catch(err => {
+                return reject(err);
             });
         }));
 
