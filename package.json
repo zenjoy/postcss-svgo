@@ -10,7 +10,8 @@
     "prepublish": "del-cli dist && BABEL_ENV=publish babel src --out-dir dist --ignore /__tests__/",
     "report": "nyc report --reporter=html",
     "test": "nyc --reporter=text ava src/__tests__",
-    "test-012": "nyc --reporter=text ava src/__tests__"
+    "test-012": "nyc --reporter=text ava src/__tests__",
+    "postinstall": "del-cli dist && BABEL_ENV=publish babel src --out-dir dist --ignore /__tests__/"
   },
   "files": [
     "LICENSE-MIT",
